@@ -120,6 +120,7 @@ public enum ScrimState {
             mBehindAlpha = mClipQsScrim ? mQSClipScrimAlpha : mDefaultScrimAlpha;
             mBehindTint = Color.TRANSPARENT;
             mNotifAlpha = mClipQsScrim ? mQSClipScrimAlpha : 0;
+            mBehindTint = Color.TRANSPARENT;
             mNotifTint = Color.TRANSPARENT;
             mFrontAlpha = 0f;
         }
@@ -142,7 +143,7 @@ public enum ScrimState {
             mBehindAlpha = mClipQsScrim ? mQSClipScrimAlpha : mDefaultScrimAlpha;
             mNotifAlpha = mClipQsScrim ? mQSClipScrimAlpha : mDefaultScrimAlpha;
             mFrontAlpha = 0f;
-            mBehindTint = Color.BLACK;
+            mBehindTint = Color.TRANSPARENT;
 
             if (mClipQsScrim) {
                 updateScrimColor(mScrimBehind, mQSClipScrimAlpha /* alpha */, Color.TRANSPARENT);
@@ -152,7 +153,7 @@ public enum ScrimState {
         // to make sure correct color is returned before "prepare" is called
         @Override
         public int getBehindTint() {
-            return Color.BLACK;
+            return Color.TRANSPARENT;
         }
     },
 
@@ -243,17 +244,17 @@ public enum ScrimState {
             mAnimateChange = !mLaunchingAffordanceWithPreview && !fromAod;
 
             mFrontTint = Color.TRANSPARENT;
-            mBehindTint = Color.BLACK;
+            mBehindTint = Color.TRANSPARENT;
             mBlankScreen = false;
 
             if (previousState == ScrimState.AOD) {
                 // Set all scrims black, before they fade transparent.
                 updateScrimColor(mScrimInFront, 1f /* alpha */, Color.BLACK /* tint */);
-                updateScrimColor(mScrimBehind, 1f /* alpha */, Color.BLACK /* tint */);
+                updateScrimColor(mScrimBehind, 1f /* alpha */, Color.TRANSPARENT /* tint */);
 
                 // Scrims should still be black at the end of the transition.
                 mFrontTint = Color.BLACK;
-                mBehindTint = Color.BLACK;
+                mBehindTint = Color.TRANSPARENT;
                 mBlankScreen = true;
             }
 
