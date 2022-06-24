@@ -120,7 +120,6 @@ public enum ScrimState {
             mBehindAlpha = mClipQsScrim ? mQSClipScrimAlpha : mDefaultScrimAlpha;
             mBehindTint = Color.TRANSPARENT;
             mNotifAlpha = mClipQsScrim ? mQSClipScrimAlpha : 0;
-            mBehindTint = Color.TRANSPARENT;
             mNotifTint = Color.TRANSPARENT;
             mFrontAlpha = 0f;
         }
