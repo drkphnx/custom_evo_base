@@ -6762,6 +6762,13 @@ public final class Settings {
         public static final String SENSOR_BLOCKED_APP_DUMMY = "sensor_blocked_app_dummy";
 
         /**
+         * Statusbar clock background
+         * 0 - hide accented chip
+         * 1 - show accented chip (default)
+         * @hide
+         */
+        public static final String STATUSBAR_CLOCK_CHIP ="statusbar_clock_chip";
+
          * @hide
          */
         public static final String SMART_CHARGING = "smart_charging";
@@ -7057,6 +7064,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(MUSIC_TILE_TITLE);
             PRIVATE_SETTINGS.add(SENSOR_BLOCK);
             PRIVATE_SETTINGS.add(FP_UNLOCK_KEYSTORE);
+            PRIVATE_SETTINGS.add(STATUSBAR_CLOCK_CHIP);
         }
 
         /**
