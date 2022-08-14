@@ -88,6 +88,14 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     media.recorder.show_manufacturer_and_model=true
 
+# Blurs
+ifeq ($(TARGET_ENABLE_BLUR), true)
+PRODUCT_PRODUCT_PROPERTIES += \
+    ro.sf.blurs_are_expensive=1 \
+    ro.surface_flinger.supports_background_blur=1 \
+    ro.launcher.blur.appLaunch=0
+endif
+
 # Disable async MTE on system_server
 PRODUCT_SYSTEM_EXT_PROPERTIES += \
     arm64.memtag.process.system_server=off
@@ -176,6 +184,7 @@ PRODUCT_PACKAGES += \
     mount.ntfs
 
 # Evolution X customization
+TARGET_ENABLE_BLUR ?= true
 TARGET_SUPPORTS_QUICK_TAP ?= false
 TARGET_USES_MINI_GAPPS ?= false
 
