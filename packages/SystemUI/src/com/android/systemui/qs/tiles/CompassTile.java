@@ -66,6 +66,7 @@ public class CompassTile extends QSTileImpl<BooleanState> implements SensorEvent
 
     private ImageView mImage;
     private boolean mListeningSensors;
+    private Handler mHandler;
 
     @Inject
     public CompassTile(QSHost host,
@@ -79,6 +80,7 @@ public class CompassTile extends QSTileImpl<BooleanState> implements SensorEvent
     ) {
         super(host, backgroundLooper, mainHandler, falsingManager, metricsLogger,
                 statusBarStateController, activityStarter, qsLogger);
+        mHandler = mainHandler;
         mSensorManager = (SensorManager) mContext.getSystemService(Context.SENSOR_SERVICE);
         mAccelerationSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mGeomagneticFieldSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
@@ -158,11 +160,16 @@ public class CompassTile extends QSTileImpl<BooleanState> implements SensorEvent
                 float relative = target - mImage.getRotation();
                 if (relative > 180) relative -= 360;
 
-                mImage.setRotation(mImage.getRotation() + relative / 2);
+                final float relative2 = relative;
+                mHandler.post(() -> {
+                    mImage.setRotation(mImage.getRotation() + relative2 / 2);
+                });
 
             } else {
                 state.label = mContext.getString(R.string.quick_settings_compass_init);
-                mImage.setRotation(0);
+                mHandler.post(() -> {
+                    mImage.setRotation(0);
+                });
             }
             state.contentDescription = mContext.getString(
                     R.string.accessibility_quick_settings_compass_on);
@@ -174,7 +181,9 @@ public class CompassTile extends QSTileImpl<BooleanState> implements SensorEvent
                     R.string.quick_settings_compass_label);
 	    state.value = false;
             if (mImage != null) {
-                mImage.setRotation(0);
+                mHandler.post(() -> {
+                    mImage.setRotation(0);
+                });
             }
             state.state = Tile.STATE_INACTIVE;
         }
