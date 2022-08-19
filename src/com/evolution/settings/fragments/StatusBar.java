@@ -61,12 +61,14 @@ public class StatusBar extends SettingsPreferenceFragment implements
     private static final String KEY_USE_OLD_MOBILETYPE = "use_old_mobiletype";
     private static final String STATUS_BAR_CLOCK_STYLE = "status_bar_clock";
     private static final String SYSTEMUI_PACKAGE = "com.android.systemui";
+    private static final String PREF_CLOCK_BG = "statusbar_clock_chip";
 
     private static final int BATTERY_STYLE_PORTRAIT = 0;
     private static final int BATTERY_STYLE_TEXT = 4;
     private static final int BATTERY_STYLE_HIDDEN = 5;
 
     private SwitchPreference mBatteryTextCharging;
+    private SwitchPreference mStatusBarClockBG;
     private SwitchPreference mCombinedIcons;
     private SwitchPreference mOverride;
     private SwitchPreference mShowRoaming;
@@ -128,6 +130,11 @@ public class StatusBar extends SettingsPreferenceFragment implements
         mStatusBarClock =
                 (SystemSettingListPreference) findPreference(STATUS_BAR_CLOCK_STYLE);
 
+        mStatusBarClockBG = (SwitchPreference) findPreference(PREF_CLOCK_BG);
+        mStatusBarClockBG.setChecked((Settings.System.getInt(getActivity()
+                .getContentResolver(), Settings.System.STATUSBAR_CLOCK_CHIP, 1) == 1));
+        mStatusBarClockBG.setOnPreferenceChangeListener(this);
+
         // Adjust status bar preferences for RTL
         if (getResources().getConfiguration().getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
             mStatusBarClock.setEntries(R.array.status_bar_clock_position_entries_rtl);
@@ -154,7 +161,12 @@ public class StatusBar extends SettingsPreferenceFragment implements
             mBatteryTextCharging.setEnabled(batterystyle == BATTERY_STYLE_HIDDEN ||
                     (batterystyle != BATTERY_STYLE_TEXT && value != 2));
             return true;
-        }
+        }else if (preference == mStatusBarClockBG) {
+            boolean value = (Boolean) newValue;
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.STATUSBAR_CLOCK_CHIP, value ? 1 : 0);
+            return true;
+	}
         return false;
     }
 
