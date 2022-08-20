@@ -6769,6 +6769,7 @@ public final class Settings {
          */
         public static final String STATUSBAR_CLOCK_CHIP ="statusbar_clock_chip";
 
+	/**
          * @hide
          */
         public static final String SMART_CHARGING = "smart_charging";
